@@ -92,7 +92,7 @@ bool check_word(uint8_t *d, size_t l)
 	uint32_t j = l / 64;
 	uint64_t word;
 	uint64_t total_words = j;
-	int o = -8;
+	int o = -W_LEN;
 	bool fail = 0;
 	printu(LOG_DEBUG, "unmarshalling and validating data");
 	do {
