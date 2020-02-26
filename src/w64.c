@@ -72,8 +72,7 @@ bool check_byte(uint64_t d, uint8_t i)
 	bool fail = 0;
 	do {
 		if ((byte = (uint8_t)(d >> --j * W_LEN)) != i) {
-			printu(LOG_CRIT, "found mis-match on byte %u, %u != %u",
-			       j, byte, i);
+			printu(LOG_CRIT, "found mis-match on byte %u, %u != %u", j, byte, i);
 			fail = 1;
 		}
 	} while (j);
@@ -97,12 +96,9 @@ bool check_word(uint8_t *d, size_t l)
 	bool fail = 0;
 	printu(LOG_DEBUG, "unmarshalling and validating data");
 	do {
-		if ((word = unpack(d + (o += W_LEN), W_LEN)) !=
-		    (i = (i ? 0 : MAX_INT))) {
+		if ((word = unpack(d + (o += W_LEN), W_LEN)) != (i = (i ? 0 : MAX_INT))) {
 			fail = 1;
-			printu(LOG_CRIT,
-			       "found mis-match on word segment %u / %u!",
-			       j / 64, total_words);
+			printu(LOG_CRIT, "found mis-match on word segment %u / %u!", j / 64, total_words);
 			check_byte(word, i);
 			printb(word);
 		}
