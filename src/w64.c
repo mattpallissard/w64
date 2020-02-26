@@ -71,7 +71,7 @@ bool check_byte(uint64_t d, uint8_t i)
 	uint8_t byte;
 	bool fail = 0;
 	do {
-		if ((byte = (uint8_t)(d >> --j * W_LEN)) != i) {
+		if ((byte = (d >> --j * W_LEN)) != i) {
 			printu(LOG_CRIT, "found mis-match on byte %u, %u != %u", j, byte, i);
 			fail = 1;
 		}
