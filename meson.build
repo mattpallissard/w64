@@ -13,6 +13,7 @@ add_test_setup('valgrind',
 
 s_dir = './src'
 i_dir = './include'
+u_dir = './util'
 inc = include_directories( i_dir )
 
 log = '@0@/log.c'.format(s_dir)
@@ -27,6 +28,9 @@ test_sources = [
 
 sources = [
 	'@0@/main.c'.format(s_dir)]
+
+check_sources = [
+	'@0@/check_file.c'.format(u_dir)]
 
 
 libw64d = shared_library('libw64',
@@ -55,6 +59,18 @@ w64s = executable('w64',
 		'-fuse-ld=lld',
 		'-flto'],
 	link_with: libw64s)
+
+check_file = executable('check_file',
+	check_sources,
+	include_directories: inc,
+	install: true,
+	install_dir: bin_dest,
+	link_args: [
+		'-static',
+		'-fuse-ld=lld',
+		'-flto'],
+	link_with: libw64s)
+
 
 w64d = executable('w64_d',
 	sources,
