@@ -17,5 +17,5 @@ void input(uint8_t *d, const char *p, size_t s);
 void output(uint8_t *d, const char *p, size_t s, bool f);
 void pack(uint8_t *d, uint64_t s, size_t l);
 void printb(uint64_t i);
-void run(uint8_t *d, const char *p, size_t s, uint8_t f);
+void run(uint8_t *s, uint8_t *d, const char *p, size_t l, uint8_t f);
 #endif

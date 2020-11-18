@@ -116,7 +116,6 @@ uint8_t *prep(size_t l)
 	if ((d = malloc(l)) == NULL || errno)
 		goto out;
 
-	memset(d, '\0', l);
 	if (errno)
 		goto out;
 
@@ -221,21 +220,24 @@ void printb(uint64_t i)
 	return;
 }
 
-void run(uint8_t *d, const char *p, size_t l, uint8_t f)
+void run(uint8_t *s, uint8_t *d, const char *p, size_t l, uint8_t f)
 {
 	/*
 	  * destination, path, length in bytes, whether or not we flush
 	  *
 	  */
-	memset(d, '\0', l);
-	fill(d, l);
-	output(d, p, l, f);
+	memset(s, '\0', l);
+	fill(s, l);
+	output(s, p, l, f);
 
 	memset(d, '\0', l);
 	input(d, p, l);
 
-	if (check_word(d, l))
+	if (check_word(d, l)){
+		printu(LOG_CRIT, "beginning check of memory contents");
+		check_word(s, l);
 		exit(1);
+	}
 
 	printu(LOG_DEBUG, "file contents are correct");
 }

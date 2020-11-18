@@ -61,7 +61,7 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 
 size_t to_gib(uint32_t i)
 {
-	return i *= 1024 * 1024 * 1023;
+	return i *= 1024 * 1024 * 1024;
 }
 
 int main(int argc, char **argv)
@@ -69,7 +69,8 @@ int main(int argc, char **argv)
 	size_t s;
 	struct arguments a;
 	uint16_t i = 0;
-	uint8_t *d;
+	uint8_t *dest;
+	uint8_t *src;
 
 	a.path = "/dev/null";
 	setprintmask(LOG_DEBUG);
@@ -77,12 +78,14 @@ int main(int argc, char **argv)
 	argp_parse(&argp, argc, argv, 0, 0, &a);
 
 	s = to_gib(a.size);
-	d = prep(s);
+	dest = prep(s);
+	src = prep(s);
 
 	while (i++ != a.iter) {
-		run(d, a.path, s, a.flush);
+		run(src, dest, a.path, s, a.flush);
 		printu(LOG_INFO, "completed iteration: %u / %u", i, a.iter);
 	}
 
-	free(d);
+	free(dest);
+	free(src);
 }
